@@ -17,15 +17,37 @@ namespace RoomBookingWebsite.Controllers
             return View();
         }
         public ActionResult Signin()
+        {            
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Signin(ClientModel clientModel) 
         {
-            ClientModel clientModel =new ClientModel();
             AccountsService accountsService = new AccountsService();
-            clientModel.UserType = accountsService.SigninService("akhil", "akhil123");
-            return View(clientModel);
+            clientModel = accountsService.SigninService(clientModel.Username,clientModel.Password);
+            if(clientModel.Username != null)
+            {
+                ViewBag.Message = "signin sucessfull";
+            }           
+            return View(); 
         }
         public ActionResult Signup()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult Signup(ClientModel clientModel)
+        {
+            AccountsService accountsService = new AccountsService();
+            string result = accountsService.SignupService(clientModel);
+            if (result == "User already exist")
+            {
+                ViewBag.Status = result.ToString();
+                return View();
+            }
+            ViewBag.Status = result.ToString();
+            return RedirectToAction("Index", "Client");
+            
         }
     }
 }
