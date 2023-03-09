@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>ClientModel</h4>
         <hr />
@@ -39,4 +39,11 @@
             </div>
         </div>
     </div>
+
 }
+@if (!string.IsNullOrEmpty(Model.UserType))
+{
+    <script>alert("@Model.UserType");</script>
+}
+
+
